@@ -1,8 +1,8 @@
 package route
 
 import (
-	"github.com/laixhe/goimg/server"
-	"github.com/laixhe/goimg/uphand"
+	"goimg/server"
+	"goimg/uphand"
 )
 
 // 注册访问路由
@@ -16,6 +16,7 @@ func InitRoute() {
 
 	// 测试上传
 	server.HandleFunc("/test", uphand.Test)
+
 	// 获取状态码
 	server.HandleFunc("/statuscode", uphand.StatusCode)
 }

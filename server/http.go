@@ -31,6 +31,7 @@ func RunHttp(adrr string) {
 	}
 
 	// 启动监听
+	log.Println("Listen on", adrr)
 	err := server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)

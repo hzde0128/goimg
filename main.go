@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/laixhe/goimg/route"
-	"github.com/laixhe/goimg/server"
-	"github.com/laixhe/goimg/config"
+	"goimg/route"
+	"goimg/server"
+	"goimg/config"
 )
 
 func main() {

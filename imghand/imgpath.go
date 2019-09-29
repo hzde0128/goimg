@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/laixhe/goimg/config"
+	"goimg/config"
 )
 
 // 匹配是否是 md5 的长度

@@ -1,4 +1,4 @@
-module github.com/laixhe/goimg
+module goimg
 
 go 1.13
 

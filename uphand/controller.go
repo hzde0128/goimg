@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/laixhe/goimg/imghand"
+	"goimg/imghand"
 )
 
 type Controller struct {
@@ -41,12 +41,13 @@ func (this Controller) Get(w http.ResponseWriter, r *http.Request) {
 
 	// 组合文件完整路径
 	filePath := imghand.UrlParse(urlParse[1:])
+	// 请求/目录
 	if filePath == "" {
 		w.Write(showMain())
 		return
 	}
 
-	// 获取要裁剪图像的宽度、高度
+	// 获取 要裁剪图像的宽度、高度
 	width := imghand.StringToInt(r.FormValue("w"))  // 宽度
 	height := imghand.StringToInt(r.FormValue("h")) // 高度
 
@@ -65,8 +66,8 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	// 缓冲的大小 - 4M
 	r.ParseMultipartForm(1024 << 12)
-	//是上传表单域的名字fileHeader
-	upfile, upFileInfo, err := r.FormFile("userfile")
+	// 是上传表单域的名字fileHeader
+	upfile, upFileInfo, err := r.FormFile("file")
 	if err != nil {
 
 		res.Code = StatusForm

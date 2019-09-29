@@ -19,7 +19,7 @@ const (
 
 var statusText = map[int]string{
 	StatusJson:        "json打包失败",
-	StatusForm:        "表单字段 userfile 缺少",
+	StatusForm:        "表单字段 file 缺少",
 	StatusImgDecode:   "图片解码不符合",
 	StatusImgIsType:   "图片类型不符合",
 	StatusFileSeek:    "设置文件读写位置失败",

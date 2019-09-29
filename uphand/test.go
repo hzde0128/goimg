@@ -16,7 +16,7 @@ func Test(w http.ResponseWriter, r *http.Request) {
         <div style="padding: 20px;">
             <p>测试上传</p>
             <form action="/" method="post" enctype="multipart/form-data">
-                <p><input type="file" name="userfile" /></p>
+                <p><input type="file" name="file" /></p>
                 <p><input type="submit" name="submit" value="上传" /></p>
             </form>
         </div>

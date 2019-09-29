@@ -1,39 +1,19 @@
 package config
 
 import (
-	"github.com/go-ini/ini"
-	"log"
-	"strings"
+	"os"
 )
-
-var conf *ini.File
-
-func init() {
-
-	var err error
-	conf, err = ini.Load("config.ini")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-}
-
-func Get(str string) string {
-
-	strArr := strings.Split(str, ".")
-
-	if len(strArr) == 2 {
-		return conf.Section(strArr[0]).Key(strArr[1]).String()
-	}
-
-	return conf.Section("").Key(strArr[0]).String()
-}
 
 func HttpAddr() string {
 
-	addr := Get("http.addr")
+	// 从环境变量SERVER_PORT获取启动端口
+	addr := os.Getenv("SERVER_PORT")
+	addrs := []byte(addr)
+	if addrs[0] != ':' {
+		addr = ":" + addr
+	}
 	if addr == "" {
-		return ":8080"
+		addr = ":8080"
 	}
 
 	return addr
@@ -41,9 +21,14 @@ func HttpAddr() string {
 
 func PathImg() string {
 
-	path := Get("img.path")
+	// 从环境变量IMAGE_PATH获取图片存储路径
+	path := os.Getenv("IMAGE_PATH")
+	paths := []byte(path)
+	if paths[len(path)-1] != '/' {
+		path = path + "/"
+	}
 	if path == "" {
-		return "img/"
+		path = "img/"
 	}
 
 	return path
