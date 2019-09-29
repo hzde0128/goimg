@@ -64,3 +64,11 @@
 采用微服务的方式运行，支持从环境变量注入，默认端口8080，默认图片存储目录img/
 
 > SERVER_PORT=8080 IMAGE_PATH=img ./goimg 
+
+### docker运行goimg
+
+> docker run -d -p 8080:8080 hzde0128/goimg:v1.0.0
+
+使用自定义环境变量
+
+> docker run -d -p 8080:18080 -e SERVER_PORT=18080 -e IMAGE_PATH=/image/ hzde0128/goimg:v1.0.0
