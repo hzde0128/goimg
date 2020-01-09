@@ -11,7 +11,7 @@ import (
 	"github.com/hzde0128/goimg/imghand"
 )
 
-// 获取图片信息
+// Info 获取图片信息
 func Info(w http.ResponseWriter, r *http.Request) {
 
 	// 响应返回
@@ -63,18 +63,19 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 	finfo, _ := fimg.Stat()
 
+	imgstr := imgid + "." + imgtype
 	res.Success = true
 	res.Code = StatusOK
 	res.Msg = StatusText(StatusOK)
 	res.Data.Imgid = imgid
 	res.Data.Mime = imgtype
 	res.Data.Size = finfo.Size()
-
+	res.Data.ImgStr = imgstr
 	w.Write(ResponseJson(res))
 
 }
 
-// 状态码
+// StatusCode 状态码
 func StatusCode(w http.ResponseWriter, r *http.Request) {
 	data, _ := json.Marshal(GetStatusText())
 	w.Write(data)

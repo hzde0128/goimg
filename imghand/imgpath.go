@@ -1,7 +1,6 @@
 package imghand
 
 import (
-
 	"log"
 	"net/url"
 	"strconv"
@@ -38,8 +37,8 @@ func SortPath(str []byte) string {
 	return ret.String()
 }
 
-// 组合文件目录路径
-func JoinPath(md5_str string) string {
+	// 组合文件目录路径
+	func JoinPath(md5_str string) string {
 
 	// 路径部分排序做目录
 	sortPath := SortPath([]byte(md5_str[:5]))

@@ -19,24 +19,24 @@ import (
 type Controller struct {
 }
 
-func (this Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (c Controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.String() == "/favicon.ico" {
 		return
 	}
 
 	if r.Method == "GET" {
-		this.Get(w, r)
+		c.Get(w, r)
 		return
 	}
 
 	if r.Method == "POST" {
-		this.Post(w, r)
+		c.Post(w, r)
 		return
 	}
 }
 
-// 输出图片
-func (this Controller) Get(w http.ResponseWriter, r *http.Request) {
+// Get 显示图片
+func (c Controller) Get(w http.ResponseWriter, r *http.Request) {
 
 	urlParse := r.URL.String()
 
@@ -57,16 +57,16 @@ func (this Controller) Get(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// 上传图片
-func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
+// Post 上传图片
+func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	// 响应返回
 	res := new(UpdateResponse)
 
 	// 上传表单 --------------------------------------
 
-	// 缓冲的大小 - 4M
-	r.ParseMultipartForm(1024 << 12)
+	// 缓冲的大小 - 8M
+	r.ParseMultipartForm(1024 << 13)
 	// 是上传表单域的名字fileHeader
 	upfile, upFileInfo, err := r.FormFile("file")
 	if err != nil {
@@ -150,7 +150,7 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 	// 获取目录信息，并创建目录
 	dirInfo, err := os.Stat(dirPath)
 	if err != nil {
-		err = os.MkdirAll(dirPath, 0666)
+		err = os.MkdirAll(dirPath, 0755)
 		if err != nil {
 
 			res.Code = StatusMkdir
@@ -161,7 +161,7 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		if !dirInfo.IsDir() {
-			err = os.MkdirAll(dirPath, 0666)
+			err = os.MkdirAll(dirPath, 0755)
 			if err != nil {
 
 				res.Code = StatusMkdir
@@ -179,7 +179,7 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 
 		// 打开一个文件,文件不存在就会创建
-		file, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0666)
+		file, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 
 			res.Code = StatusOpenFile
@@ -189,7 +189,7 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		log.Printf("create file %s success\n", filePath)
+
 		
 		defer file.Close()
 
@@ -239,13 +239,17 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-
+	imgstr := fileMd5 + "." + imgtype
 	res.Success = true
 	res.Code = StatusOK
 	res.Msg = StatusText(StatusOK)
 	res.Data.Imgid = fileMd5
 	res.Data.Mime = imgtype
 	res.Data.Size = upFileInfo.Size
+	res.Data.ImgStr = imgstr
+
+	// 打印上传成功日志
+	log.Printf("Create file %s success\n", filePath)
 
 	w.Write(ResponseJson(res))
 
