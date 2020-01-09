@@ -44,7 +44,7 @@
     "version": "v0.1.1",
     "data": {
         "size": 42445,
-        "mime": "jpeg",
+        "mime": "jpg",
         "imgid": "9d32e3c40efb0b749270695d5f0afdfc"
     }
 }
@@ -52,9 +52,9 @@
 
 ## 获取图片信息
 
-* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpeg
+* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpg
 
-* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpeg&w=300&h=100
+* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpg&w=300&h=100
 
 * 返回值: json
 
