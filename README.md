@@ -22,11 +22,11 @@
 
 ## 获取图片
 
-* GET /9d32e3c40efb0b749270695d5f0afdfc.jpeg
+* GET /9d32e3c40efb0b749270695d5f0afdfc.jpg
 
 ## 获取图片 并缩略，宽度=300 高度=100
 
-* GET /9d32e3c40efb0b749270695d5f0afdfc.jpeg?w=300&h=100
+* GET /9d32e3c40efb0b749270695d5f0afdfc.jpg?w=300&h=100
 
 ## 上传图片
 
