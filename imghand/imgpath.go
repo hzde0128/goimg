@@ -70,7 +70,6 @@ func UrlParse(md5_url string) string {
 	}
 
 	parsePath := parse.Path
-	log.Println("parsePath:", parsePath)
 
 	if len(parsePath) < 32 {
 		return ""

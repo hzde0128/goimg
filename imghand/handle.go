@@ -3,7 +3,7 @@ package imghand
 import (
 	"bufio"
 	"image"
-	_ "image/gif"
+    _ "image/gif"
 	"image/jpeg"
 	"image/png"
 	"io"
@@ -16,7 +16,7 @@ import (
 	"github.com/nfnt/resize"
 )
 
-// 裁剪图像
+// CutImage 裁剪图像
 func CutImage(w http.ResponseWriter, path string, width, height int) {
 
 	// 没有宽高，就是在加载原图像
@@ -26,13 +26,14 @@ func CutImage(w http.ResponseWriter, path string, width, height int) {
 		if err != nil {
 			NoImage(w)
 
-			log.Println("file, err = os.Open(path)", err)
+			log.Printf("open file failed: %s\n", err)
 			return
 		}
 
+		defer file.Close()
+		log.Printf("open file %s success\n", path)
 		io.Copy(w, file)
-		file.Close()
-
+		
 		return
 	}
 
@@ -111,6 +112,7 @@ func CutImage(w http.ResponseWriter, path string, width, height int) {
 		log.Println("out, err := os.Create(CutPath)", err)
 		return
 	}
+	log.Printf("create %s success\n", CutPath)
 	defer out.Close()
 
 	if imgtype == JPEG || imgtype == JPG {

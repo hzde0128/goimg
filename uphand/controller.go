@@ -140,8 +140,12 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	// 组合文件完整路径
 	dirPath := imghand.JoinPath(fileMd5) + "/" // 目录
+	
+	// 修改jpeg的后缀为jpg
+	if imgtype == "jpeg" {
+		imgtype = "jpg"
+	}
 	filePath := dirPath + fileMd5 + "." + imgtype            // 文件路径
-	log.Println("filePath:", filePath)
 
 	// 获取目录信息，并创建目录
 	dirInfo, err := os.Stat(dirPath)
@@ -184,6 +188,9 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 			return
 		}
+
+		log.Printf("create file %s success\n", filePath)
+		
 		defer file.Close()
 
 		if imgtype == imghand.PNG {
