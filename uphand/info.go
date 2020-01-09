@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"goimg/imghand"
+	"github.com/hzde0128/goimg/imghand"
 )
 
 // 获取图片信息

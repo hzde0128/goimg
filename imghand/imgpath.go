@@ -1,11 +1,13 @@
 package imghand
 
 import (
+
+	"log"
 	"net/url"
 	"strconv"
 	"strings"
 
-	"goimg/config"
+	"github.com/hzde0128/goimg/config"
 )
 
 // 匹配是否是 md5 的长度
@@ -47,8 +49,9 @@ func JoinPath(md5_str string) string {
 	str.WriteString(config.PathImg())
 	str.WriteString(sortPath)
 	str.WriteString("/")
-	str.WriteString(md5_str)
+	str.WriteString(md5_str[0:32])
 
+	// 配置文件目录/短目录/md5/md5图片
 	return str.String()
 
 }
@@ -60,10 +63,6 @@ func UrlParse(md5_url string) string {
 		return ""
 	}
 
-	if len(md5_url) < 32 {
-		return ""
-	}
-
 	// 进行 url 解析
 	parse, err := url.Parse(md5_url)
 	if err != nil {
@@ -71,13 +70,15 @@ func UrlParse(md5_url string) string {
 	}
 
 	parsePath := parse.Path
+	log.Println("parsePath:", parsePath)
 
-	if len(parsePath) != 32 {
+	if len(parsePath) < 32 {
 		return ""
 	}
 
 	// 匹配是否是 md5 的长度
 	if !IsMD5Path(parsePath) {
+		log.Printf("%s 图片不匹配", parsePath)
 		return ""
 	}
 

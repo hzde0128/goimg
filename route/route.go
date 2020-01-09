@@ -1,8 +1,8 @@
 package route
 
 import (
-	"goimg/server"
-	"goimg/uphand"
+	"github.com/hzde0128/goimg/server"
+	"github.com/hzde0128/goimg/uphand"
 )
 
 // 注册访问路由

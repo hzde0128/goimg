@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"crypto/md5"
 	"fmt"
+	"log"
 	"image"
 	"image/gif"
 	"image/jpeg"
@@ -12,7 +13,7 @@ import (
 	"net/http"
 	"os"
 
-	"goimg/imghand"
+	"github.com/hzde0128/goimg/imghand"
 )
 
 type Controller struct {
@@ -139,7 +140,8 @@ func (this Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	// 组合文件完整路径
 	dirPath := imghand.JoinPath(fileMd5) + "/" // 目录
-	filePath := dirPath + fileMd5              // 文件路径
+	filePath := dirPath + fileMd5 + "." + imgtype            // 文件路径
+	log.Println("filePath:", filePath)
 
 	// 获取目录信息，并创建目录
 	dirInfo, err := os.Stat(dirPath)

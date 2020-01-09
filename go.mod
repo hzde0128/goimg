@@ -1,4 +1,4 @@
-module goimg
+module github.com/hzde0128/goimg
 
 go 1.13
 
