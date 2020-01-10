@@ -12,6 +12,8 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
+	"strconv"
 
 	"github.com/hzde0128/goimg/imghand"
 )
@@ -41,9 +43,11 @@ func (c Controller) Get(w http.ResponseWriter, r *http.Request) {
 	urlParse := r.URL.String()
 
 	// 组合文件完整路径
-	filePath := imghand.UrlParse(urlParse[1:])
+	
+	imgStr := imghand.UrlParse(urlParse[1:])
+
 	// 请求/目录
-	if filePath == "" {
+	if imgStr == "" {
 		w.Write(showMain())
 		return
 	}
@@ -53,7 +57,7 @@ func (c Controller) Get(w http.ResponseWriter, r *http.Request) {
 	height := imghand.StringToInt(r.FormValue("h")) // 高度
 
 	// 加载图片
-	imghand.CutImage(w, filePath, width, height)
+	imghand.CutImage(w, imgStr, width, height)
 
 }
 
@@ -136,16 +140,22 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 	fileMd5FX := md5Hash.Sum(nil)
 	fileMd5 := fmt.Sprintf("%x", fileMd5FX)
 
+	// 时间戳,单位为秒
+	timeStamp  := strconv.Itoa(int(time.Now().Unix()))
+
 	// 目录计算 --------------------------------------
 
 	// 组合文件完整路径
-	dirPath := imghand.JoinPath(fileMd5) + "/" // 目录
+	// dirPath := imghand.JoinPath(fileMd5) + "/" // 目录
+	dirPath := imghand.JoinPath1(timeStamp) + "/" // 目录
 	
 	// 修改jpeg的后缀为jpg
 	if imgtype == "jpeg" {
 		imgtype = "jpg"
 	}
-	filePath := dirPath + fileMd5 + "." + imgtype            // 文件路径
+
+	// 完整文件路径
+	filePath := dirPath + fileMd5 + "_" + timeStamp + "." + imgtype            
 
 	// 获取目录信息，并创建目录
 	dirInfo, err := os.Stat(dirPath)
@@ -239,12 +249,12 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	imgstr := fileMd5 + "." + imgtype
+	imgstr := fileMd5 + "_" + timeStamp + "." + imgtype
 	res.Success = true
 	res.Code = StatusOK
 	res.Msg = StatusText(StatusOK)
-	res.Data.Imgid = fileMd5
-	res.Data.Mime = imgtype
+	res.Data.Imgid = fileMd5 + "_" + timeStamp
+ 	res.Data.Mime = imgtype
 	res.Data.Size = upFileInfo.Size
 	res.Data.ImgStr = imgstr
 

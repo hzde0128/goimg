@@ -5,16 +5,17 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hzde0128/goimg/config"
 )
 
-// 匹配是否是 md5 的长度
+// IsMD5Path 匹配是否是 md5 的长度
 func IsMD5Path(str string) bool {
 	return regexpUrlParse.MatchString(str)
 }
 
-// 路径部分排序做目录
+// SortPath 路径部分排序做目录
 func SortPath(str []byte) string {
 
 	// 对 byte 进行排序
@@ -37,8 +38,8 @@ func SortPath(str []byte) string {
 	return ret.String()
 }
 
-	// 组合文件目录路径
-	func JoinPath(md5_str string) string {
+// JoinPath 组合文件目录路径
+func JoinPath(md5_str string) string {
 
 	// 路径部分排序做目录
 	sortPath := SortPath([]byte(md5_str[:5]))
@@ -49,13 +50,29 @@ func SortPath(str []byte) string {
 	str.WriteString(sortPath)
 	str.WriteString("/")
 	str.WriteString(md5_str[0:32])
-
+	
 	// 配置文件目录/短目录/md5/md5图片
 	return str.String()
 
 }
 
-// 进行 url 部分解析 - md5，并组合文件完整路径
+// JoinPath1 根据时间戳计算目录
+func JoinPath1(timeStamp string) string {
+	
+	timestamp, err := strconv.Atoi(timeStamp)
+	if err != nil {
+		log.Printf("时间戳转换整型失败:%v",err)
+	}
+	dateTime := time.Unix(int64(timestamp),0).Format("20060102")
+	var str = strings.Builder{}
+
+	str.WriteString(config.PathImg())
+	str.WriteString("/")
+	str.WriteString(dateTime)
+	return str.String()
+}
+
+// UrlParse 进行 url 部分解析 - md5，并组合文件完整路径
 func UrlParse(md5_url string) string {
 
 	if md5_url == "" {
@@ -64,12 +81,23 @@ func UrlParse(md5_url string) string {
 
 	// 进行 url 解析
 	parse, err := url.Parse(md5_url)
+
 	if err != nil {
 		return ""
 	}
 
 	parsePath := parse.Path
 
+	// 根据时间戳获取对应的目录
+	// fb22e5e61756acd6c070065139186b7c_1578646180.jpg
+	startIndex := strings.LastIndex(md5_url, "_")
+	endIndex := strings.LastIndex(md5_url, ".")
+	timeStamp := md5_url[startIndex+1:endIndex]
+	// timeStampInt, _ := strconv.Atoi(timeStamp) 
+
+	// timestamp转日期
+	// dateTime := time.Unix(int64(timeStampInt),0).Format("20060102")
+	// log.Printf("dateTime:%v",dateTime)
 	if len(parsePath) < 32 {
 		return ""
 	}
@@ -81,11 +109,12 @@ func UrlParse(md5_url string) string {
 	}
 
 	// 组合文件完整路径
-	return JoinPath(parsePath) + "/" + parsePath
+	// log.Printf("parsePath:%v\n",parsePath)
+	return JoinPath1(timeStamp) + "/" + parsePath
 
 }
 
-// 字符串的数字转int
+// StringToInt 字符串的数字转int
 func StringToInt(str string) int {
 	if str == "" {
 		return 0

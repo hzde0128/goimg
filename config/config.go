@@ -36,7 +36,7 @@ func PathImg() (path string) {
 		}
 	}
 	if path == "" {
-		path = "/data/"
+		path = "/data"
 	}
 	return
 }

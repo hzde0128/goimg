@@ -22,11 +22,11 @@
 
 ## 获取图片
 
-* GET /9d32e3c40efb0b749270695d5f0afdfc.jpg
+* GET fb22e5e61756acd6c070065139186b7c_1578646180.jpg
 
 ## 获取图片 并缩略，宽度=300 高度=100
 
-* GET /9d32e3c40efb0b749270695d5f0afdfc.jpg?w=300&h=100
+* GET fb22e5e61756acd6c070065139186b7c_1578646180.jpg?w=300&h=100
 
 ## 上传图片
 
@@ -45,16 +45,17 @@
     "data": {
         "size": 42445,
         "mime": "jpg",
-        "imgid": "9d32e3c40efb0b749270695d5f0afdfc"
+        "imgid": "fb22e5e61756acd6c070065139186b7c_1578646180",
+        "imgstr": "fb22e5e61756acd6c070065139186b7c_1578646180.jpg"
     }
 }
 ```
 
 ## 获取图片信息
 
-* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpg
+* GET /info?imgid=fb22e5e61756acd6c070065139186b7c_1578646180.jpg
 
-* GET /info?imgid=9d32e3c40efb0b749270695d5f0afdfc.jpg&w=300&h=100
+* GET /info?imgid=fb22e5e61756acd6c070065139186b7c_1578646180.jpg&w=300&h=100
 
 * 返回值: json
 

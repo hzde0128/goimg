@@ -15,8 +15,8 @@ var noImg *image.RGBA
 func init() {
 
 	var err error
-	// 初始化正则表达式 图片正则，32位md5+后缀
-	regexpUrlParse, err = regexp.Compile(`[a-z0-9]{32}\.(jpeg|jpg|png|gif)`)
+	// 初始化正则表达式 图片正则，32位md5+时间戳+后缀
+	regexpUrlParse, err = regexp.Compile(`[a-z0-9]{32}\_\d+\.(jpeg|jpg|png|gif)`)
 	if err != nil {
 		log.Fatalln("regexpUrlParse:", err)
 	}
