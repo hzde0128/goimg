@@ -3,7 +3,6 @@ package imghand
 import (
 	"bufio"
 	"image"
-    _ "image/gif"
 	"image/jpeg"
 	"image/png"
 	"io"
@@ -33,7 +32,7 @@ func CutImage(w http.ResponseWriter, path string, width, height int) {
 		defer file.Close()
 		log.Printf("open file %s success\n", path)
 		io.Copy(w, file)
-		
+
 		return
 	}
 
@@ -134,7 +133,7 @@ func CutImage(w http.ResponseWriter, path string, width, height int) {
 
 }
 
-// 用于找不到图片时用
+// NoImage 用于找不到图片时用
 func NoImage(w http.ResponseWriter) {
 
 	// 图片流方式输出

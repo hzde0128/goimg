@@ -2,6 +2,7 @@ package uphand
 
 import "encoding/json"
 
+// ResponseInterface 返回版本信息
 type ResponseInterface interface {
 	SetVersion(string)
 }
@@ -22,9 +23,9 @@ func (r *ResponseModel) SetVersion(str string) {
 
 // UpdateDate 上传响应数据
 type UpdateDate struct {
-	Size  int64  `json:"size"`  // 大小
-	Mime  string `json:"mime"`  // 图片类型
-	Imgid string `json:"imgid"` // 图片id
+	Size   int64  `json:"size"`   // 大小
+	Mime   string `json:"mime"`   // 图片类型
+	Imgid  string `json:"imgid"`  // 图片id
 	ImgStr string `json:"imgstr"` // 带后缀的图片
 }
 
@@ -34,8 +35,8 @@ type UpdateResponse struct {
 	Data UpdateDate `json:"data"`
 }
 
-// ResponseJson 响应 json 打包
-func ResponseJson(res ResponseInterface) []byte {
+// ResponseJSON 响应 json 打包
+func ResponseJSON(res ResponseInterface) []byte {
 
 	res.SetVersion("v1.0.0")
 
@@ -44,8 +45,8 @@ func ResponseJson(res ResponseInterface) []byte {
 
 		// 打包失败
 		data, _ = json.Marshal(ResponseModel{false,
-			StatusJson,
-			StatusText(StatusJson),
+			StatusJSON,
+			StatusText(StatusJSON),
 			"", ""})
 	}
 

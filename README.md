@@ -18,7 +18,10 @@
 
 ## 安装
 
-* go get -u github.com/hzde0128/goimg;cd $GOROOT/src/github.com/hzde0128/goimg
+```bash
+go get -u github.com/hzde0128/goimg
+cd $GOROOT/src/github.com/hzde0128/goimg
+``` 
 
 ## 获取图片
 
@@ -75,8 +78,12 @@
 
 ## `docker`运行`goimg`
 
-`docker run -d -p 8080:8080 hzde0128/goimg:v1.0.0`
+```bash
+docker run -d -p 8080:8080 hzde0128/goimg:v1.0.0
+```
 
 使用自定义环境变量
 
-`docker run -d -p 8080:18080 -e SERVER_PORT=18080 -e IMAGE_PATH=/image/ hzde0128/goimg:v1.0.0`
+```bash
+docker run -d -p 8080:18080 -e SERVER_PORT=18080 -e IMAGE_PATH=/image/ hzde0128/goimg:v1.0.0
+```

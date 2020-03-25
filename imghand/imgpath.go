@@ -12,7 +12,7 @@ import (
 
 // IsMD5Path 匹配是否是 md5 的长度
 func IsMD5Path(str string) bool {
-	return regexpUrlParse.MatchString(str)
+	return regexpURLParse.MatchString(str)
 }
 
 // SortPath 路径部分排序做目录
@@ -39,18 +39,18 @@ func SortPath(str []byte) string {
 }
 
 // JoinPath 组合文件目录路径
-func JoinPath(md5_str string) string {
+func JoinPath(md5Str string) string {
 
 	// 路径部分排序做目录
-	sortPath := SortPath([]byte(md5_str[:5]))
+	sortPath := SortPath([]byte(md5Str[:5]))
 
 	var str = strings.Builder{}
 
 	str.WriteString(config.PathImg())
 	str.WriteString(sortPath)
 	str.WriteString("/")
-	str.WriteString(md5_str[0:32])
-	
+	str.WriteString(md5Str[0:32])
+
 	// 配置文件目录/短目录/md5/md5图片
 	return str.String()
 
@@ -58,12 +58,12 @@ func JoinPath(md5_str string) string {
 
 // JoinPath1 根据时间戳计算目录
 func JoinPath1(timeStamp string) string {
-	
+
 	timestamp, err := strconv.Atoi(timeStamp)
 	if err != nil {
-		log.Printf("时间戳转换整型失败:%v",err)
+		log.Printf("时间戳转换整型失败:%v", err)
 	}
-	dateTime := time.Unix(int64(timestamp),0).Format("20060102")
+	dateTime := time.Unix(int64(timestamp), 0).Format("20060102")
 	var str = strings.Builder{}
 
 	str.WriteString(config.PathImg())
@@ -72,15 +72,15 @@ func JoinPath1(timeStamp string) string {
 	return str.String()
 }
 
-// UrlParse 进行 url 部分解析 - md5，并组合文件完整路径
-func UrlParse(md5_url string) string {
+// URLParse 进行 url 部分解析 - md5，并组合文件完整路径
+func URLParse(md5Url string) string {
 
-	if md5_url == "" {
+	if md5Url == "" {
 		return ""
 	}
 
 	// 进行 url 解析
-	parse, err := url.Parse(md5_url)
+	parse, err := url.Parse(md5Url)
 
 	if err != nil {
 		return ""
@@ -90,10 +90,10 @@ func UrlParse(md5_url string) string {
 
 	// 根据时间戳获取对应的目录
 	// fb22e5e61756acd6c070065139186b7c_1578646180.jpg
-	startIndex := strings.LastIndex(md5_url, "_")
-	endIndex := strings.LastIndex(md5_url, ".")
-	timeStamp := md5_url[startIndex+1:endIndex]
-	// timeStampInt, _ := strconv.Atoi(timeStamp) 
+	startIndex := strings.LastIndex(md5Url, "_")
+	endIndex := strings.LastIndex(md5Url, ".")
+	timeStamp := md5Url[startIndex+1 : endIndex]
+	// timeStampInt, _ := strconv.Atoi(timeStamp)
 
 	// timestamp转日期
 	// dateTime := time.Unix(int64(timeStampInt),0).Format("20060102")

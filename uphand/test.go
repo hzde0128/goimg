@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-// 测试上传
+// Test 测试上传
 func Test(w http.ResponseWriter, r *http.Request) {
 
 	html := `

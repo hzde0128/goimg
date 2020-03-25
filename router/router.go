@@ -1,11 +1,11 @@
-package route
+package router
 
 import (
 	"github.com/hzde0128/goimg/server"
 	"github.com/hzde0128/goimg/uphand"
 )
 
-// 注册访问路由
+// InitRoute 注册访问路由
 func InitRoute() {
 
 	// 路由处理绑定

@@ -14,11 +14,12 @@ const (
 
 var imgType []string = []string{PNG, JPG, JPEG, GIF}
 
+// GetImgType 获取图片类型
 func GetImgType() []string {
 	return imgType
 }
 
-// 判断是否有这个图片类型
+// IsType 判断是否有这个图片类型
 func IsType(str string) bool {
 
 	// 转小写

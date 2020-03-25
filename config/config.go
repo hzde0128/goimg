@@ -6,22 +6,20 @@ import (
 	"os"
 )
 
-// HttpAddr 监听端口
-func HttpAddr() (addr string) {
+// HTTPAddr 监听端口
+func HTTPAddr() string {
 
 	// 从环境变量SERVER_PORT获取启动端口
-	addr = os.Getenv("SERVER_PORT")
+	addr := os.Getenv("SERVER_PORT")
 
-	if addr == "" {
-		addr = ":8080"
-	}
-	addrs := []byte(addr)
 	if addr != "" {
-		if addrs[0] != ':' {
+		if addr[0] != ':' {
 			addr = ":" + addr
 		}
+	} else {
+		addr = ":8080"
 	}
-	return
+	return addr
 }
 
 // PathImg 图片存储目录

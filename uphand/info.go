@@ -25,12 +25,12 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	height := imghand.StringToInt(r.FormValue("h")) // 高度
 
 	// 组合文件完整路径
-	filePath := imghand.UrlParse(imgid)
+	filePath := imghand.URLParse(imgid)
 	if filePath == "" {
 
-		res.Code = StatusUrlNotFound
-		res.Msg = StatusText(StatusUrlNotFound)
-		w.Write(ResponseJson(res))
+		res.Code = StatusURLNotFound
+		res.Msg = StatusText(StatusURLNotFound)
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -44,7 +44,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusImgNotFound
 		res.Msg = StatusText(StatusImgNotFound)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -56,7 +56,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusImgNotFound
 		res.Msg = StatusText(StatusImgNotFound)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -71,7 +71,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	res.Data.Mime = imgtype
 	res.Data.Size = finfo.Size()
 	res.Data.ImgStr = imgstr
-	w.Write(ResponseJson(res))
+	w.Write(ResponseJSON(res))
 
 }
 

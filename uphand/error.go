@@ -2,7 +2,7 @@ package uphand
 
 // 状态码
 const (
-	StatusJson        = 1
+	StatusJSON        = 1
 	StatusForm        = 2
 	StatusImgDecode   = 3
 	StatusImgIsType   = 4
@@ -12,13 +12,13 @@ const (
 	StatusOpenFile    = 8
 	StatusImgEncode   = 9
 	StatusImgNotFound = 10
-	StatusUrlNotFound = 11
+	StatusURLNotFound = 11
 	StatusOK          = 200
 	StatusNotFound    = 404
 )
 
 var statusText = map[int]string{
-	StatusJson:        "json打包失败",
+	StatusJSON:        "json打包失败",
 	StatusForm:        "表单字段 file 缺少",
 	StatusImgDecode:   "图片解码不符合",
 	StatusImgIsType:   "图片类型不符合",
@@ -28,15 +28,17 @@ var statusText = map[int]string{
 	StatusOpenFile:    "文件创建失败",
 	StatusImgEncode:   "图片生成失败",
 	StatusImgNotFound: "没有找到图片",
-	StatusUrlNotFound: "Url Not Found",
+	StatusURLNotFound: "Url Not Found",
 	StatusOK:          "OK",
 	StatusNotFound:    "Not Found",
 }
 
+// StatusText ...
 func StatusText(code int) string {
 	return statusText[code]
 }
 
+// GetStatusText ...
 func GetStatusText() map[int]string {
 	return statusText
 }
@@ -52,4 +54,3 @@ func showMain() []byte {
 
 	return []byte(show)
 }
-

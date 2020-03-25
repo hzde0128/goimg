@@ -4,20 +4,21 @@ import (
 	"bufio"
 	"crypto/md5"
 	"fmt"
-	"log"
 	"image"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"io"
+	"log"
 	"net/http"
 	"os"
-	"time"
 	"strconv"
+	"time"
 
 	"github.com/hzde0128/goimg/imghand"
 )
 
+// Controller 结构体
 type Controller struct {
 }
 
@@ -43,8 +44,8 @@ func (c Controller) Get(w http.ResponseWriter, r *http.Request) {
 	urlParse := r.URL.String()
 
 	// 组合文件完整路径
-	
-	imgStr := imghand.UrlParse(urlParse[1:])
+
+	imgStr := imghand.URLParse(urlParse[1:])
 
 	// 请求/目录
 	if imgStr == "" {
@@ -77,7 +78,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusForm
 		res.Msg = StatusText(StatusForm)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -93,7 +94,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusImgDecode
 		res.Msg = StatusText(StatusImgDecode)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -103,7 +104,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusImgIsType
 		res.Msg = StatusText(StatusImgIsType)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -116,7 +117,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusFileSeek
 		res.Msg = StatusText(StatusFileSeek)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -132,7 +133,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		res.Code = StatusFileMd5
 		res.Msg = StatusText(StatusFileMd5)
-		w.Write(ResponseJson(res))
+		w.Write(ResponseJSON(res))
 
 		return
 	}
@@ -141,21 +142,21 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 	fileMd5 := fmt.Sprintf("%x", fileMd5FX)
 
 	// 时间戳,单位为秒
-	timeStamp  := strconv.Itoa(int(time.Now().Unix()))
+	timeStamp := strconv.Itoa(int(time.Now().Unix()))
 
 	// 目录计算 --------------------------------------
 
 	// 组合文件完整路径
 	// dirPath := imghand.JoinPath(fileMd5) + "/" // 目录
 	dirPath := imghand.JoinPath1(timeStamp) + "/" // 目录
-	
+
 	// 修改jpeg的后缀为jpg
 	if imgtype == "jpeg" {
 		imgtype = "jpg"
 	}
 
 	// 完整文件路径
-	filePath := dirPath + fileMd5 + "_" + timeStamp + "." + imgtype            
+	filePath := dirPath + fileMd5 + "_" + timeStamp + "." + imgtype
 
 	// 获取目录信息，并创建目录
 	dirInfo, err := os.Stat(dirPath)
@@ -165,7 +166,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 			res.Code = StatusMkdir
 			res.Msg = StatusText(StatusMkdir)
-			w.Write(ResponseJson(res))
+			w.Write(ResponseJSON(res))
 
 			return
 		}
@@ -176,7 +177,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 				res.Code = StatusMkdir
 				res.Msg = StatusText(StatusMkdir)
-				w.Write(ResponseJson(res))
+				w.Write(ResponseJSON(res))
 
 				return
 			}
@@ -194,13 +195,11 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 			res.Code = StatusOpenFile
 			res.Msg = StatusText(StatusOpenFile)
-			w.Write(ResponseJson(res))
+			w.Write(ResponseJSON(res))
 
 			return
 		}
 
-
-		
 		defer file.Close()
 
 		if imgtype == imghand.PNG {
@@ -220,7 +219,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 				res.Code = StatusFileSeek
 				res.Msg = StatusText(StatusFileSeek)
-				w.Write(ResponseJson(res))
+				w.Write(ResponseJSON(res))
 
 				return
 			}
@@ -230,7 +229,7 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 				res.Code = StatusImgDecode
 				res.Msg = StatusText(StatusImgDecode)
-				w.Write(ResponseJson(res))
+				w.Write(ResponseJSON(res))
 
 				return
 			}
@@ -238,11 +237,10 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-
 		if err != nil {
 			res.Code = StatusImgEncode
 			res.Msg = StatusText(StatusImgEncode)
-			w.Write(ResponseJson(res))
+			w.Write(ResponseJSON(res))
 
 			return
 		}
@@ -254,13 +252,13 @@ func (c Controller) Post(w http.ResponseWriter, r *http.Request) {
 	res.Code = StatusOK
 	res.Msg = StatusText(StatusOK)
 	res.Data.Imgid = fileMd5 + "_" + timeStamp
- 	res.Data.Mime = imgtype
+	res.Data.Mime = imgtype
 	res.Data.Size = upFileInfo.Size
 	res.Data.ImgStr = imgstr
 
 	// 打印上传成功日志
 	log.Printf("Create file %s success\n", filePath)
 
-	w.Write(ResponseJson(res))
+	w.Write(ResponseJSON(res))
 
 }
