@@ -38,26 +38,8 @@ func SortPath(str []byte) string {
 	return ret.String()
 }
 
-// JoinPath 组合文件目录路径
-func JoinPath(md5Str string) string {
-
-	// 路径部分排序做目录
-	sortPath := SortPath([]byte(md5Str[:5]))
-
-	var str = strings.Builder{}
-
-	str.WriteString(config.PathImg())
-	str.WriteString(sortPath)
-	str.WriteString("/")
-	str.WriteString(md5Str[0:32])
-
-	// 配置文件目录/短目录/md5/md5图片
-	return str.String()
-
-}
-
-// JoinPath1 根据时间戳计算目录
-func JoinPath1(timeStamp string) string {
+// JoinPath 组合文件目录路径 根据时间戳计算目录
+func JoinPath(timeStamp string) string {
 
 	timestamp, err := strconv.Atoi(timeStamp)
 	if err != nil {
@@ -109,8 +91,7 @@ func URLParse(md5Url string) string {
 	}
 
 	// 组合文件完整路径
-	// log.Printf("parsePath:%v\n",parsePath)
-	return JoinPath1(timeStamp) + "/" + parsePath
+	return JoinPath(timeStamp) + "/" + parsePath
 
 }
 

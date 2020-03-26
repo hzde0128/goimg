@@ -1,6 +1,6 @@
 module github.com/hzde0128/goimg
 
-go 1.13
+go 1.14
 
 require (
 	github.com/go-ini/ini v1.46.0
