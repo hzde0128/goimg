@@ -4,7 +4,7 @@ WORKDIR /go/src/github.com/hzde0128/goimg
 RUN CGO_ENABLED=0 go build -a -ldflags "-s -w" -o app ./
 
 
-FROM debian:buster
+FROM scratch
 COPY --from=builder /go/src/github.com/hzde0128/goimg/goimg/app /app
 EXPOSE 8080
 VOLUME /data
